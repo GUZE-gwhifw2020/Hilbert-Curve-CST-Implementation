@@ -7,35 +7,35 @@
 %   绘制N阶Hierber曲线
 % ===================================== %
 
-%% Global Variable %%
+%% ====== Global Variable ====== %%
 % 阶数
-N = 5;
-% 类型(1~4)
-type = 3;
+N = 4;
+% 类型(0~3)
+type = 0;
 
 %%
 close all
 figure(1)
 axis([0 1 0 1]);
 hold on
-HilberCurvePlot(N)
+HilberCurvePlot(N,mod(type,4));
 axis square
 
 
-function HilberCurvePlot(N, depth, type, bias)
-if(nargin == 1)
+function HilberCurvePlot(N, type, depth, bias)
+if(nargin <= 2)
     depth = 1;
     bias = [0.5 0.5];
-    type = 2;
+    if(nargin <= 1)
+        type = 2;
+    end
 end
     
 if(depth == N)
     
     xC = [-1 1]/2^(depth+1)+bias(1);
     yC = [-1 1]/2^(depth+1)+bias(2);
-    
-    fprintf('\t%0f %0f %0f %0f \n',xC,yC);
-    
+     
     % 旋转因子
     if(type ~= 0)
         line(xC([1,2]),yC([1,1]));
@@ -58,10 +58,11 @@ else
         3 2 2 1;
         2 0 3 3;
         ];
-    HilberCurvePlot(N, depth + 1, typeNext(type+1,1), bias + [-1 1] / 2^(depth+1));
-    HilberCurvePlot(N, depth + 1, typeNext(type+1,2), bias + [-1 -1] / 2^(depth+1));
-    HilberCurvePlot(N, depth + 1, typeNext(type+1,3), bias + [1 -1] / 2^(depth+1));
-    HilberCurvePlot(N, depth + 1, typeNext(type+1,4), bias + [1 1] / 2^(depth+1));
+    HilberCurvePlot(N, typeNext(type+1,1), depth + 1, bias + [-1 1] / 2^(depth+1));
+    HilberCurvePlot(N, typeNext(type+1,2), depth + 1, bias + [-1 -1] / 2^(depth+1));
+    HilberCurvePlot(N, typeNext(type+1,3), depth + 1, bias + [1 -1] / 2^(depth+1));
+    HilberCurvePlot(N, typeNext(type+1,4), depth + 1, bias + [1 1] / 2^(depth+1));
+    
     % 连接线
     if(type == 2)
         line(-[1 1] / 2^(depth) + [1 1]/2^(N+1) +bias(1), [-1 1]/2^(N+1)+bias(2));

@@ -9,15 +9,15 @@
 clear CSTLineMake
 %% ====== Global Variable ====== %%
 % 阶数
-N = 3;
+N = 7;
 % 类型(0~3)
-type = 0;
+type = 2;
 % 打开cst文件
 cst=actxserver('CSTStudio.Application');
-mws = cst.invoke('OpenDesign','E:\Git\Individual Projects\Hilbert-Curve-CST-Implementation\HilbertCurve.cst');
+mws = cst.invoke('OpenDesign',fullfile(pwd,'HilbertCurve.cst'));
 
 L = 100;
-W = 20 * 0.0254;
+W = 10 * 0.0254;
 
 
 % Solid部分
